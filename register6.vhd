@@ -4,9 +4,9 @@ use ieee.numeric_std.all;
 
 entity register6 is
 	port(
-	    input: in std_logic_vector (7 downto 0);
+	    input: in std_logic_vector (5 downto 0);
 	    clk, ld, clr: in std_logic;
-		output: out std_logic_vector (7 downto 0) 
+		output: out std_logic_vector (5 downto 0) 
 		);
 end mux4x1;
 
@@ -16,7 +16,7 @@ begin
     change: process(clk)
         if (rising_edge(clk)) then
             if (ld='1') then
-                output <= "00000000";
+                output <= "000000";
             elsif (ld='0' and clr='1') then
                 output <= input;
             end if;
