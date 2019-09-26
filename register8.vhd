@@ -10,7 +10,7 @@ entity register8 is
 		);
 end mux4x1;
 
-architecture proc_of_register6 of register6 is
+architecture proc_of_register8 of register8 is
 
 begin
     change: process(clk)
