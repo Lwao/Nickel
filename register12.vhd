@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity register11 is
+entity register12 is
 	port(
 	    input: in std_logic_vector (11 downto 0);
 	    clk, ld, clr: in std_logic;
@@ -10,7 +10,7 @@ entity register11 is
 		);
 end mux4x1;
 
-architecture proc_of_register11 of register6 is
+architecture proc_of_register12 of register12 is
 
 begin
     change: process(clk)
@@ -21,6 +21,5 @@ begin
                 output <= input;
             end if;
         end if;
-    
     end process change;
-end proc_of_register11;
+end proc_of_register12;
