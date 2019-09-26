@@ -19,3 +19,5 @@ begin
     V <= '1' when ((in0(7)='0' and in1(7)='0' and temp(7)='1') or (in0(7)='1' and in1(7)='1' and temp(7)='0')) else '0';
     output <= temp;
 end proc_of_and8;
+
+-- http://sandbox.mc.edu/~bennet/cs110/tc/orules.html
