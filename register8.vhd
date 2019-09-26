@@ -21,6 +21,5 @@ begin
                 output <= input;
             end if;
         end if;
-    
     end process change;
 end proc_of_register8;
