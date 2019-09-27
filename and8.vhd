@@ -21,3 +21,4 @@ begin
 end proc_of_and8;
 
 -- http://sandbox.mc.edu/~bennet/cs110/tc/orules.html
+-- https://www.edaplayground.com/#
