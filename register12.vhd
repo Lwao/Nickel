@@ -8,7 +8,7 @@ entity register12 is
 	    clk, ld, clr: in std_logic;
 		output: out std_logic_vector (11 downto 0) 
 		);
-end mux4x1;
+end register12;
 
 architecture proc_of_register12 of register12 is
 
