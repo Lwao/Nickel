@@ -8,7 +8,7 @@ entity register8 is
 	    clk, ld, clr: in std_logic;
 		output: out std_logic_vector (7 downto 0) 
 		);
-end mux4x1;
+end register8;
 
 architecture proc_of_register8 of register8 is
 
