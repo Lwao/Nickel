@@ -13,9 +13,15 @@ end mirror8;
 architecture proc_of_mirror8 of mirror8 is
     signal temp: std_logic_vector (7 downto 0);
 begin
-    temp(7 downto 0) <= input(0 to 7);
+    temp(7) <= input(0);
+    temp(6) <= input(1);
+    temp(5) <= input(2);
+    temp(4) <= input(3);
+    temp(3) <= input(4);
+    temp(2) <= input(5);
+    temp(1) <= input(6);
+    temp(0) <= input(7);
     Z <= '1' when temp="00000000" else '0';
     S <= '1' when temp(7)='1' else '0';
-    V <= '1' when ((in0(7)='0' and in1(7)='0' and temp(7)='1') or (in0(7)='1' and in1(7)='1' and temp(7)='0')) else '0';
     output <= temp;
 end proc_of_mirror8;
