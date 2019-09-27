@@ -8,7 +8,7 @@ entity register16 is
 	    clk, ld, clr: in std_logic;
 		output: out std_logic_vector (15 downto 0) 
 		);
-end mux4x1;
+end register16;
 
 architecture proc_of_register16 of register16 is
 
