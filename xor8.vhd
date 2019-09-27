@@ -16,6 +16,6 @@ begin
     temp <= in0 xor in1;
     Z <= '1' when temp="00000000" else '0';
     S <= '1' when temp(7)='1' else '0';
-    V <= '1' when ((in0(7)='0' and in1(7)='0' and temp(7)='1') or (in0(7)='1' and in1(7)='1' and temp(7)='0')) else '0';
+    V <= '0';
     output <= temp;
 end proc_of_xor8;
