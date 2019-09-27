@@ -2,15 +2,15 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity and8 is
+entity mirror8 is
 	port(
 	    input: in std_logic_vector (7 downto 0);
 	    output: out std_logic_vector (7 downto 0);
 	    Z, S, V: out std_logic
 		);
-end and8;
+end mirror8;
 
-architecture proc_of_and8 of and8 is
+architecture proc_of_mirror8 of mirror8 is
     signal temp: std_logic_vector (7 downto 0);
 begin
     temp(7 downto 0) <= input(0 to 7);
@@ -18,5 +18,4 @@ begin
     S <= '1' when temp(7)='1' else '0';
     V <= '1' when ((in0(7)='0' and in1(7)='0' and temp(7)='1') or (in0(7)='1' and in1(7)='1' and temp(7)='0')) else '0';
     output <= temp;
-end proc_of_and8;
-
+end proc_of_mirror8;
