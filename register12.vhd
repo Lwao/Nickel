@@ -18,7 +18,7 @@ begin
     begin
         if (rising_edge(clk)) then
             if (clr='1') then
-                output <= "000000000000";
+                output <=  x"000";
             elsif (ld='1' and clr='0') then
                 output <= input;
             end if;
