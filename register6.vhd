@@ -13,14 +13,15 @@ end register6;
 architecture proc_of_register6 of register6 is
 
 begin
-    change: process(clk)
+    change: 
+	 process(clk)
+    begin
         if (rising_edge(clk)) then
-            if (ld='1') then
+            if (clr='1') then
                 output <= "000000";
-            elsif (ld='0' and clr='1') then
+            elsif (ld='1' and clr='0') then
                 output <= input;
             end if;
         end if;
-    
     end process change;
 end proc_of_register6;
