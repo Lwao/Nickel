@@ -33,7 +33,10 @@ begin
     MIR  : xxx port map ();
     SETB : xxx port map ();
     CLRB : xxx port map ();
-    
+    MUX  : xxx port map (result_sum, result_sub, result_and, result_or,
+			 result_xor, result_nand, result_nor, result_xnor,
+			 result_sla, result_sra, result_ror, result_rol,
+			 result_mir, result_setb, result_clrb, mux_alu, output);
     change: process()
     begin
       case mux_alu is
