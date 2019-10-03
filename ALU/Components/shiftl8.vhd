@@ -13,7 +13,57 @@ end shiftl8;
 architecture proc_of_shiftl8 of shiftl8 is
     signal temp: std_logic_vector (7 downto 0);
 begin
-    output <= std_logic_vector(shift_left(unsigned(in0), to_integer(unsigned(in1))));
-    Z <= '1' when temp="00000000" else '0';
-    S <= '1' when temp(7)='1' else '0';
+	temp<=in0;
+	output(7) <= temp(7) WHEN in1(7 downto 0) = "00000000" else
+					 temp(6) WHEN in1(7 downto 0) = "00000001" else 
+					 temp(5) WHEN in1(7 downto 0) = "00000010" else
+					 temp(4) WHEN in1(7 downto 0) = "00000011" else
+					 temp(3) WHEN in1(7 downto 0) = "00000100" else
+					 temp(2) WHEN in1(7 downto 0) = "00000101" else
+					 temp(1) WHEN in1(7 downto 0) = "00000110" else
+					 temp(0) WHEN in1(7 downto 0) = "00000111" else
+					 '0';
+			
+	output(6) <= temp(6) WHEN in1(7 downto 0) = "00000000" else
+					 temp(5) WHEN in1(7 downto 0) = "00000001" else 
+					 temp(4) WHEN in1(7 downto 0) = "00000010" else
+					 temp(3) WHEN in1(7 downto 0) = "00000011" else
+					 temp(2) WHEN in1(7 downto 0) = "00000100" else
+					 temp(1) WHEN in1(7 downto 0) = "00000101" else
+					 temp(0) WHEN in1(7 downto 0) = "00000110" else
+					 '0';
+					 
+	output(5) <= temp(5) WHEN in1(7 downto 0) = "00000000" else
+					 temp(4) WHEN in1(7 downto 0) = "00000001" else 
+					 temp(3) WHEN in1(7 downto 0) = "00000010" else
+					 temp(2) WHEN in1(7 downto 0) = "00000011" else
+					 temp(1) WHEN in1(7 downto 0) = "00000100" else
+					 temp(0) WHEN in1(7 downto 0) = "00000101" else
+					 '0';
+			
+	output(4) <= temp(4) WHEN in1(7 downto 0) = "00000000" else
+					 temp(3) WHEN in1(7 downto 0) = "00000001" else 
+					 temp(2) WHEN in1(7 downto 0) = "00000010" else
+					 temp(1) WHEN in1(7 downto 0) = "00000011" else
+					 temp(0) WHEN in1(7 downto 0) = "00000100" else
+					 '0';
+				
+	output(3) <= temp(3) WHEN in1(7 downto 0) = "00000000" else
+					 temp(2) WHEN in1(7 downto 0) = "00000001" else 
+					 temp(1) WHEN in1(7 downto 0) = "00000010" else
+					 temp(0) WHEN in1(7 downto 0) = "00000011" else
+					 '0';
+			
+	output(2) <= temp(2) WHEN in1(7 downto 0) = "00000000" else
+					 temp(1) WHEN in1(7 downto 0) = "00000001" else 
+					 temp(0) WHEN in1(7 downto 0) = "00000010" else
+					 '0';
+				
+	output(1) <= temp(1) WHEN in1(7 downto 0) = "00000000" else
+					 temp(0) WHEN in1(7 downto 0) = "00000001" else 
+					 '0';
+			
+	output(0) <= temp(0) WHEN in1(7 downto 0) = "00000000" else
+					 '0';
+
 end proc_of_shiftl8;
