@@ -16,44 +16,94 @@ end entity;
 
 architecture rtl of controller is
 
-	type state_type is (s0, s1, s2, s3);
-
-	-- Register to hold the current state
+	type state_type is ( INIT, FETCH, DECOD, 
+								ADD, SUB, sAND, sOR, sXOR, sNAND, sNOR, sXNOR,
+								RTR, RTL, sSLL, sSRL, SWAP, COM, NEG, MOV,
+								SBR, CBR, SER, CLR, CFR, MIR, INC, DEC, NOP,
+								JMPI, JMPR, ADDI, SUBI, XORI, BEQ, BLT,
+								LD, ST, sIN, sOUT, SBI, CBI);
 	signal state   : state_type;
+	alias OpCode: bit_vector(3 downto 0) is IR(15 downto 12);
+	alias OpExt: bit_vector(2 downto 0) is IR(2 downto 0);
 
 begin
-
-	-- Logic to advance to the next state
 	process (clk, reset)
 	begin
 		if reset = '1' then
-			state <= s0;
+			state <= INIT;
 		elsif (rising_edge(clk)) then
 			case state is
-				when s0=>
-					if input = '1' then
-						state <= s1;
-					else
-						state <= s0;
-					end if;
-				when s1=>
-					if input = '1' then
-						state <= s2;
-					else
-						state <= s1;
-					end if;
-				when s2=>
-					if input = '1' then
-						state <= s3;
-					else
-						state <= s2;
-					end if;
-				when s3 =>
-					if input = '1' then
-						state <= s0;
-					else
-						state <= s3;
-					end if;
+				when INIT =>
+					state <= FETCH;
+				when FETCH =>
+					state <= DECOD;
+				when DECOD =>
+					case OpCode is
+						when x"0"=>
+							case OpExt is
+								when x"0"=>
+									state <= ADD;
+								when x"1"=>
+									state <= SUB;
+								when x"2"=>
+									state <= sAND;								
+								when x"3"=>
+									state <= sOR;
+								when x"4"=>
+									state <= sXOR;
+								when x"5"=>
+									state <= sNAND;
+								when x"6"=>
+									state <= sNOR;
+								when x"7"=>
+									state <= sXNOR;
+								end case;
+						when x"1"=>
+							case OpExt is
+								when x"0"=>
+									state <= RTR;
+								when x"1"=>
+									state <= RTL;
+								when x"2"=>
+									state <= sSLL;								
+								when x"3"=>
+									state <= sSRL;
+								when x"4"=>
+									state <= SWAP;
+								when x"5"=>
+									state <= COM;
+								when x"6"=>
+									state <= NEG;
+								when x"7"=>
+									state <= MOV;
+								end case;
+						when x"2"=>
+							case OpExt is
+								when x"0"=>
+									state <= SBR;
+								when x"1"=>
+									state <= CBR;
+								when x"2"=>
+									state <= SER;								
+								when x"3"=>
+									state <= CLR;
+								when x"4"=>
+									state <= CFR;
+								when x"5"=>
+									state <= MIR;
+								when x"6"=>
+									state <= INC;
+								when x"7"=>
+									state <= DEC;
+								end case;
+						when x"3"=>
+							case OpExt is
+								when x"0"=>
+									state <= NOP;
+								when x"1"=>
+									state <= JMPR;
+								end case;
+					end case;
 			end case;
 		end if;
 	end process;
