@@ -9,8 +9,8 @@ entity controller is
 		IR: in std_logic_vector(15 downto 0);
 		R1_ld, R2_ld, R3_ld, D_rd, D_wr: out std_logic;
 		PC_clr, PC_ld, I_ld, IR_ld, OUT_ld, IN_ld: out std_logic;
-		RS1_add, RS2_add, MUX_imm, MUX_sel, MUX_PC: out std_logic_vector (2 downto 0);
-		MUX_alu: out std_logic_vector(3 downto 0);
+		RS1_add, RS2_add, MUX_imm, MUX_sel, MUX_PC: out std_logic_vector (1 downto 0);
+		MUX_alu: out std_logic_vector(3 downto 0)
 	);
 
 end entity;
@@ -18,14 +18,16 @@ end entity;
 architecture rtl of controller is
 
 	type state_type is ( INIT, FETCH, DECOD, 
-						ADD, SUB, sAND, sOR, sXOR, sNAND, sNOR, sXNOR,
-						RTR, RTL, sSLL, sSRL, SWAP, COM, NEG, MOV,
-						SBR, CBR, SER, CLR, CFR, MIR, INC, DEC, NOP,
-						JMPI, JMPR, ADDI, SUBI, XORI, BEQ, BLT,
-						LD, ST, sIN, sOUT, SBI, CBI);
+			ADD, SUB, sAND, sOR, sXOR, sNAND, sNOR, sXNOR,
+			RTR, RTL, sSLL, sSRL, SWAP, COM, NEG, MOV,
+			SBR, CBR, SER, CLR, CFR, MIR, INC, DEC, NOP,
+			JMPI, JMPR, ADDI, SUBI, XORI, BEQ, BLT,
+			LD, ST, sIN, sOUT, SBI, CBI);
 	signal state   : state_type;
 	alias OpCode: bit_vector(3 downto 0) is IR(15 downto 12);
 	alias OpExt: bit_vector(2 downto 0) is IR(2 downto 0);
+	alias RS1: bit_vector(1 downto 0) is IR(9 downto 8);
+	alias RS2: bit_vector(1 downto 0) is IR(7 downto 6);
 
 begin
 	process (clk, reset)
@@ -167,74 +169,97 @@ begin
 			when ADD =>
 				MUX_alu <= x"0";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when SUB =>
 				MUX_alu <= x"1";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when sAND =>
 				MUX_alu <= x"2";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when sOR =>
 				MUX_alu <= x"3";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when sXOR =>
 				MUX_alu <= x"4";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when sNAND =>
 				MUX_alu <= x"5";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when sNOR =>
 				MUX_alu <= x"6";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when sXNOR =>
 				MUX_alu <= x"7";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when RTR =>
 				MUX_alu <= x"B";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when RTL =>
 				MUX_alu <= x"A";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when sSLL =>
 				MUX_alu <= x"8";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when sSRL =>
 				MUX_alu <= x"9";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when SWAP =>
 				MUX_alu <= x"10";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when COM =>
 				MUX_alu <= x"7";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when NEG =>
 				MUX_alu <= x"1";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when MOV =>
 				MUX_alu <= x"0";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when SBR =>
 				MUX_alu <= x"D";
 				MUX_sel <= "11";
+				MUX_imm <= "10";
 			when CBR =>
 				MUX_alu <= x"E";
 				MUX_sel <= "11";
+				MUX_imm <= "10";
 			when SER =>
 				MUX_alu <= x"7";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when CLR =>
 				MUX_alu <= x"0";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when CFR =>
 			
 			when MIR =>
 				MUX_alu <= x"C";
 				MUX_sel <= "11";
+				MUX_imm <= "00";
 			when INC =>
 				MUX_alu <= x"0";
 				MUX_sel <= "11";
+				MUX_imm <= "11";
 			when DEC =>
 				MUX_alu <= x"1";
 				MUX_sel <= "11";
+				MUX_imm <= "11";
 			when NOP =>
 			when JMPI =>
 				
@@ -243,27 +268,34 @@ begin
 			when ADDI =>
 				MUX_alu <= x"0";
 				MUX_sel <= "11";
+				MUX_imm <= "01";
 			when SUBI =>
 				MUX_alu <= x"1";
 				MUX_sel <= "11";
+				MUX_imm <= "01";
 			when XORI =>
 				MUX_alu <= x"4";
 				MUX_sel <= "11";
+				MUX_imm <= "01";
 			when BEQ =>
 			when BLT =>
 			when LD =>
 				MUX_alu <= x"0";
 				MUX_sel <= "10";
+				MUX_imm <= "01";
 			when ST =>
 				MUX_alu <= x"0";
 				MUX_sel <= "11";
+				MUX_imm <= "01";
 			when sIN =>
 				MUX_sel <= "01"; 
 			when sOUT =>
 			
 			when SBI =>
+				MUX_imm <= "10";
 			
 			when CBI =>
+				MUX_imm <= "10";
 				
 		end case;
 	end process;
