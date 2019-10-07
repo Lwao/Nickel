@@ -8,7 +8,7 @@ entity controller is
 		L, G, E, Z, S, V, C: in std_logic;
 		IR: in std_logic_vector(15 downto 0);
 		R1_ld, R2_ld, R3_ld, D_rd, D_wr: out std_logic;
-		PC_clr, PC_ld, I_ld, IR_ld, OUT_ld, IN_ld: out std_logic;
+		PC_clr, PC_ld, I_ld, IR_ld, OUT_ld, IN_ld, SR_clr: out std_logic;
 		RS1_add, RS2_add, MUX_imm, MUX_sel, MUX_PC: out std_logic_vector (1 downto 0);
 		MUX_alu: out std_logic_vector(3 downto 0)
 	);
@@ -28,6 +28,7 @@ architecture rtl of controller is
 	alias OpExt: bit_vector(2 downto 0) is IR(2 downto 0);
 	alias RS1: bit_vector(1 downto 0) is IR(9 downto 8);
 	alias RS2: bit_vector(1 downto 0) is IR(7 downto 6);
+	alias RD: bit_vector(1 downto 0) is IR(11 downto 10);
 
 begin
 	process (clk, reset)
@@ -172,168 +173,270 @@ begin
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when SUB =>
 				MUX_alu <= x"1";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when sAND =>
 				MUX_alu <= x"2";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when sOR =>
 				MUX_alu <= x"3";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when sXOR =>
 				MUX_alu <= x"4";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when sNAND =>
 				MUX_alu <= x"5";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when sNOR =>
 				MUX_alu <= x"6";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when sXNOR =>
 				MUX_alu <= x"7";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when RTR =>
 				MUX_alu <= x"B";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when RTL =>
 				MUX_alu <= x"A";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when sSLL =>
 				MUX_alu <= x"8";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when sSRL =>
 				MUX_alu <= x"9";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
 				RS2_add <= R2;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when SWAP =>
 				MUX_alu <= x"10";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when COM =>
 				MUX_alu <= x"7";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when NEG =>
 				MUX_alu <= x"1";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when MOV =>
 				MUX_alu <= x"0";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
 				RS1_add <= R1;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when SBR =>
 				MUX_alu <= x"D";
 				MUX_sel <= "11";
 				MUX_imm <= "10";
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when CBR =>
 				MUX_alu <= x"E";
 				MUX_sel <= "11";
 				MUX_imm <= "10";
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when SER =>
 				MUX_alu <= x"7";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when CLR =>
 				MUX_alu <= x"0";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when CFR =>
-			
+				SR_clr <= '1';
 			when MIR =>
 				MUX_alu <= x"C";
 				MUX_sel <= "11";
 				MUX_imm <= "00";
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when INC =>
 				MUX_alu <= x"0";
 				MUX_sel <= "11";
 				MUX_imm <= "11";
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when DEC =>
 				MUX_alu <= x"1";
 				MUX_sel <= "11";
 				MUX_imm <= "11";
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when NOP =>
 			when JMPI =>
-				
+				MUX_PC <= "10";
+				PC_ld <= '1';
 			when JMPR =>
-			
+				MUX_PC <= "01";
+				PC_ld <= '1';
 			when ADDI =>
 				MUX_alu <= x"0";
 				MUX_sel <= "11";
 				MUX_imm <= "01";
 				RS1_add <= R1;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when SUBI =>
 				MUX_alu <= x"1";
 				MUX_sel <= "11";
 				MUX_imm <= "01";
 				RS1_add <= R1;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when XORI =>
 				MUX_alu <= x"4";
 				MUX_sel <= "11";
 				MUX_imm <= "01";
 				RS1_add <= R1;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when BEQ =>
 				R1_add <= R1;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when BLT =>
 				RS1_add <= R1;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when LD =>
 				MUX_alu <= x"0";
 				MUX_sel <= "10";
 				MUX_imm <= "01";
 				RS1_add <= R1;
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when ST =>
 				MUX_alu <= x"0";
 				MUX_sel <= "11";
 				MUX_imm <= "01";
 				RS1_add <= IR(11 downto 10);
-				RS2add <= IR(9 ownto 8);
+				RS2_add <= IR(9 downto 8);
+				R1_ld <= not(RD(1)) and RD(0);
+				R2_ld <= RD(1) and not(RD(0));
+				R3_ld <= RD(1) and RD(0);
 			when sIN =>
 				MUX_sel <= "01"; 
+				IN_ld <= '1';
 			when sOUT =>
 				RS1_add <= IR(11 downto 10);
+				OUT_ld <= '1';
 			when SBI =>
 				MUX_imm <= "10";
-			
+
 			when CBI =>
 				MUX_imm <= "10";
 				
 		end case;
 	end process;
 
+	-- port maps
+			
+	IN_ld <= '0';
+	OUT_ld <= '0';
+	SR_clr <= '0';
+	R1_ld <= '0';
+	R2_ld <= '0';
+	R3_ld <= '0';
 end rtl;
