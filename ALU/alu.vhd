@@ -8,7 +8,7 @@ entity alu is
 	    rs1, rs2: in std_logic_vector (7 downto 0);
             mux_alu: in std_logic_vector (3 downto 0);
 	    output: out std_logic_vector (7 downto 0);
-	    L, G, E, Z, S, V, C: out std_logic
+	    Z, S, V, C: out std_logic
 		);
 end alu;
 
