@@ -17,30 +17,37 @@ end datapath;
 
 architecture proc_of_datapath of datapath is
 	signal flags: std_logic_vector (7 downto 0);
+	signal MUX_rs1_out, MUX_rs2_out, MUX_imm_out: std_logic_vector (7 downto 0); 
+	signal imm_pos2: std_logic_vector (7 downto 0);
+        signal PC_pos1: std_logic_vector (11 downto 0);
 	
 begin
-    flags(7) <= '0';
-    flags(6) <= L;
-    flags(5) <= G;
-    flags(4) <= E;
-    flags(3) <= Z;
-    flags(2) <= S;
-    flags(1) <= V;
-    flags(0) <= C;
-    COMP : comparator8 port map ();
-    ALU  : alu port map (rs1, rs2, mux_alu, alu_out);
-    R0   : register8 port map (x"00", clk, 1, 1, r0_out);
-    R1   : register8 port map (sel_out, clk, R1_ld, clr, r1_out);
-    R2   : register8 port map (sel_out, clk, R2_ld, clr, r2_out);
-    R3   : register8 port map (sel_out, clk, R3_ld, clr, r3_out);
+	
+    imm_pos2(7 downto 3) <= "00000"
+    imm_pos2(2 downto 0) <= IR(9 downto 7);
+    PC_pos1(11) <= IR(11);
+    PC_pos1(10) <= IR(11);
+    PC_pos1(9) <= IR(11);
+    PC_pos1(8 downto 0) <= IR(11 downto 3);
+
+
+    INC_PC : sum12 port map (PC, x"001", PCinc_out, Cpc1, Vpc1);
+    SUM_PC : sum12 port map (PC, x"001", PCinc_out, Cpc1, Vpc1);
+    COMP : comparator8 port map (MUX_rs1_out, MUX_rs2_out, L, E, G);
+    ALU  : alu port map (rs1, rs2, MUX_alu, alu_out);			
+    R0   : register8 port map (x"00", clk, 1, 1, r0_out);				
+    R1   : register8 port map (sel_out, clk, R1_ld, clr, r1_out);				
+    R2   : register8 port map (sel_out, clk, R2_ld, clr, r2_out);			
+    R3   : register8 port map (sel_out, clk, R3_ld, clr, r3_out);			
     IN   : register8 port map (sel_out, clk, ld, clr, rin_out);
     OUT  : register8 port map (in, clk, ld, clr, rout_out);
     SR   : register8 port map (flags, clk, 1, SR_clr, out);
-    PC   : register12 port map (in, clk, ld, clr, out);
-    IR   : register12 port map (in, clk, ld, clr, out);
-    MUX_rs1 : mux4x8 port map (r0_out, r1_out, r2_out, r3_out, RS1_add, o);
-    MUX_rs2 : mux4x8 port map (r0_out, r1_out, r2_out, r3_out, RS2_add, o);
-    MUX_imm : mux4x8 port map (1, 2, 3, 4, sel, o)
+    PC   : register12 port map (in, clk, ld, clr, PC);
+    IR   : register16 port map (in, clk, ld, clr, IR);
+    MUX_rs1 : mux4x8 port map (r0_out, r1_out, r2_out, r3_out, RS1_add, MUX_rs1_out);
+    MUX_rs2 : mux4x8 port map (r0_out, r1_out, r2_out, r3_out, RS2_add, MUX_rs2_out);
+    MUX_ime : mux4x8 port map (MUX_rs2_out, IR(7 downto 0), imm_pos2, "00000001", MUX_imm, MUX_imm_out)
     MUX_sel : mux4x8 port map (rout_out, rin_out, rd_dt, alu_out, MUX_sel, sel_out);
+    MUX_PC : mux4x8 port map (PCinc_out, PCsum_out, IR(11 downto 0), x"000");
     
-end proc_of_datapath;
+end proc_of_datapath;  
