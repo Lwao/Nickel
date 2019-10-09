@@ -5,8 +5,8 @@ entity controller is
 
 	port(
 		clk, reset: in	std_logic;
-		L, G, E, Z, S, V, C: in std_logic;
-		IR: in std_logic_vector(15 downto 0);
+		flags: in std_logic_vector (7 downto 0);
+		IR: in std_logic_vector (15 downto 0);
 		R1_ld, R2_ld, R3_ld, D_rd, D_wr: out std_logic;
 		PC_clr, PC_ld, I_ld, IR_ld, OUT_ld, IN_ld, SR_clr: out std_logic;
 		RS1_add, RS2_add, MUX_imm, MUX_sel, MUX_PC: out std_logic_vector (1 downto 0);
@@ -29,8 +29,10 @@ architecture rtl of controller is
 	alias RS1: bit_vector(1 downto 0) is IR(9 downto 8);
 	alias RS2: bit_vector(1 downto 0) is IR(7 downto 6);
 	alias RD: bit_vector(1 downto 0) is IR(11 downto 10);
-
+	signal E, L : std_logic;
 begin
+	E <= flags(4);
+	L <= flags(6);
 	process (clk, reset)
 	begin
 		if reset = '1' then
