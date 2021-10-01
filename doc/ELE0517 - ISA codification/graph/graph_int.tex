@@ -1,0 +1,107 @@
+\begin{figure}[H]
+\begin{center}
+\begin{tikzpicture} [scale=0.8]
+\begin{semilogxaxis}[
+    title={},
+    xlabel={$\omega$ (rad/s)},
+    ylabel={$|T_{ip}|$ (dB)},
+    xmin=1, xmax=1000000,
+    ymin=-22, ymax=22,
+    xtick={1,10,100,1000,10000,100000,1000000},
+    ytick={-20,-10,0,10,20},
+    legend pos=north west,
+    ymajorgrids=true,
+    grid style=dashed,
+]
+\addplot[
+    color=blue,
+    mark=square,
+    ]
+    coordinates {
+    (6.28,20.339)
+    (31.42,20.172)
+    (62.83,20.259)
+    (94.25,20.261)
+    (188.5,20.217)
+    (314.16,20.388)
+    (471.24,20.257)
+    (628.32,20.257)
+    (1256.64,20.129)
+    (1884.96,19.869)
+    (2513.27,19.645)
+    (3141.59,19.37)
+    (4712.39,18.486)
+    (6283.19,17.616)
+    (6911.5,16.975)
+    (9424.78,15.43)
+    (10995.57,14.698)
+    (12566.37,13.739)
+    (31415.93,6.776)
+    (47123.89,3.478)
+    (62831.85,1.038)
+    (75398.22,-0.45)
+    (94247.78,-2.183)
+    (113097.34,-3.789)
+    (125663.71,-4.751)
+    (188495.56,-8.18)
+    (314159.27,-12.128)
+    (471238.9,-16.28)
+    (628318.53,-18.503)
+    };
+\end{semilogxaxis}
+\end{tikzpicture}
+\hspace{1cm}
+\begin{tikzpicture} [scale=0.8]
+\begin{semilogxaxis}[
+    title={},
+    xlabel={$\omega$ (rad/s)},
+    ylabel={$\angle T_{ip}$ (°)},
+    xmin=1, xmax=1000000,
+    ymin=88, ymax=182,
+    xtick={1,10,100,1000,10000,100000,1000000},
+    ytick={90, 135, 180},
+    legend pos=north west,
+    ymajorgrids=true,
+    grid style=dashed,
+]
+\addplot[
+    color=blue,
+    mark=square,
+    ]
+    coordinates {
+    (6.28,180)
+    (31.42,180)
+    (62.83,177)
+    (94.25,176)
+    (188.5,177)
+    (314.16,178)
+    (471.24,174)
+    (628.32,174)
+    (1256.64,172)
+    (1884.96,164)
+    (2513.27,161)
+    (3141.59,155)
+    (4712.39,145)
+    (6283.19,138)
+    (6911.5,135)
+    (9424.78,125)
+    (10995.57,120)
+    (12566.37,116)
+    (31415.93,104)
+    (47123.89,99)
+    (62831.85,97)
+    (75398.22,96)
+    (94247.78,94)
+    (113097.34,93)
+    (125663.71,92)
+    (188495.56,91)
+    (314159.27,91)
+    (471238.9,91)
+    (628318.53,90)
+    };
+\end{semilogxaxis}
+\end{tikzpicture}
+\end{center}
+\caption{Curvas de bode com os resultados práticos da função de transferência do integrador.}
+\label{graph:1} 
+\end{figure}

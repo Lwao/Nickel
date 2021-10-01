@@ -1,0 +1,264 @@
+\begin{center}
+\large Experimento: \textbf{Integradores e diferenciadores usando amplificadores operacionais}
+\end{center}
+
+\setlength{\abovedisplayskip}{-10pt}
+\setlength{\belowdisplayskip}{-10pt}
+
+\section{Introdução}
+
+O presente relatório visa detalhar o experimento laboratorial realizado na disciplina laboratório de circuitos eletrônicos no dia 08 de outubro de 2019 sobre o assunto de integradores e diferenciadores utilizando amplificadores operacionais (AMPOPs), mais especificamente os do circuito integrado LF353. Com o objetivo de compreender o funcionamento dos circuitos integradores e diferenciadores analógicos usando AMPOPs. Os esquema dos circuitos analisados são mostradas abaixo.
+
+\input{circuits/integrator.tex}
+
+\input{circuits/derivator.tex}
+
+Os circuitos integradores e diferenciadores como o próprio nome já diz, realizam a operação de integração e derivação para os sinais de entradas (formas de onda) aplicadas neles. O circuito integrador, em si, fornece na saída uma diferença de potencial que é proporcional a área sob a curva que define o sinal. Já o circuito diferenciador é basicamente um detector da taxa de variação do sinal de entrada em relação ao tempo. Podemos ver na figura 1 e 2, respectivamente, exemplos utilizando AMPOP para de circuito integrador e diferenciador. 
+
+A atividade nos mostra dois circuitos, um integrador prático e um diferenciador prático, ela foi dividida em duas parte, uma na análise em frequência de ambos circuitos, com a medição da magnitude e fase para frequências entre 1Hz e 100kHz, além da frequência de corte. A outra parte da atividade experimental se trata na análise comparativa da saída aplicando uma onda quadrada na entrada para três frequências diferentes, uma muito menor que a frequência de corte, uma muito maior e outra na frequência de corte de ambos sistemas. 
+
+O osciloscópio digital foi utilizado para medir as formas de onda na entrada e na saída do amplificador de instrumentação, como forma de comparar os valores e comprovar os resultados teóricos.
+
+
+\section{Análise Teórica}
+
+\subsection{Integrador}
+
+Reconhece-se a função de transferência para o integrador prático do circuito da figura \ref{ckt:1} como:
+
+\begin{center}
+\begin{equation} \label{tip}
+        T_{IP}(s) = - \frac{\frac{R_F}{R_1}}{1+\frac{s}{\frac{1}{R_FC}}} =  \frac{k_i}{1+\frac{s}{\omega_{ci}}}
+\end{equation}
+\end{center}
+
+Comparando a igualdade da equação \ref{tip} pode-se determinar os parâmetros de ganho e de frequência de corte para o integrador, podendo serem encontrados por:
+
+\begin{center}
+\begin{equation} \label{tip:1}
+         k_i = - \frac{R_F}{R_1} = -10
+\end{equation}
+\end{center}
+
+\begin{center}
+\begin{equation} \label{tip:2}
+       \omega_{ci} = 2 \pi f_{ci} = \frac{1}{R_FC_1} = 2 \pi 1061 rad/s
+\end{equation}
+\end{center}
+
+Assim permite-se identificar a frequência de corte $f_{ci}$ do integrador como $1.061kHz$.
+
+Em termos de tensão de entrada e saída, para observar os efeitos do circuito em torno da frequência de corte, pode-se injetar na entrada do circuito uma tensão na forma:
+
+\begin{center}
+\begin{equation} \label{int:1}
+       v_i(t) = sen(\omega_{ci}t) V
+\end{equation}
+\end{center}
+
+Nessa região espera-se que o ganho da função de transferência, bem como o ângulo de defasagem sejam:
+
+\begin{center}
+\begin{equation} \label{int:1}
+       |T_{ip}(\omega_{ci})| = |k_i| \times 0.707 = 7.07 V/V
+\end{equation}
+\end{center}
+
+\begin{center}
+\begin{equation} \label{int:2}
+       \angle T_{ip}(\omega_{ci})  = 135°
+\end{equation}
+\end{center}
+
+Assim a saída será:
+
+\begin{center}
+\begin{equation} \label{int:3}
+       v_o(t) = |T_{ip}(\omega_{ci})| \times |v_i(t)| \times sen(\omega_{ci}t + T_{ip}(\omega_{ci})) = 7.07\times sen(\omega_{ci}t + 135°) V
+\end{equation}
+\end{center}
+
+Dessa forma, a resposta em frequência pode ser observada a partir dos diagramas de bode da função de transferência. A curva de módulo indica um perfil de integração quase ideal para frequências maiores que a de corte e atribui um ganho finito para frequências abaixo daquela. A curva de ângulo mostra que o integrador é inversor.
+
+Se injetado um sinal quadrado no integrador cujo o espectro de frequência possui harmônicas, pode-se perceber que de acordo com que a faixa de frequências de maior potência fique a frequências acima da de corte, haverá uma intensa integração do sinal, resultando em uma função triangular na saída. Porém, de acordo com que as frequências do sinal diminuam, elas enfrentarão a região de ganho constante, com apenas poucas frequências sendo integradas. Mas já que o espectro de frequência de um sinal limitado no tempo é infinito, as harmônicas de maior frequência e menor potência serão integradas, implicando em um sinal de saída que não será perfeitamente quadrado, mesmo que as frequências principais do sinal se encontrem em baixas frequências.
+
+\input{graph/bode_int.tex}
+
+
+
+\subsection{Derivador}
+
+Reconhece-se a função de transferência para o derivador prático do circuito da figura \ref{ckt:2} como:
+
+\begin{center}
+\begin{equation} \label{tdp}
+        T_{DP}(s) = - \frac{s\frac{R_F}{R_1}}{s+\frac{1}{R_1C}} =  \frac{sk_d}{s+\omega_{cd}}
+\end{equation}
+\end{center}
+
+Comparando a igualdade da equação \ref{tdp} pode-se determinar os parâmetros de ganho e de frequência de corte para o derivador, podendo serem encontrados por:
+
+\begin{center}
+\begin{equation} \label{tdp:1}
+         k_d = - \frac{R_F}{R_1} = -10
+\end{equation}
+\end{center}
+
+\begin{center}
+\begin{equation} \label{tdp:2}
+       \omega_{cd} = 2 \pi f_{cd} = \frac{1}{R_1C_2} = 2 \pi 1591 rad/s
+\end{equation}
+\end{center}
+
+Assim permite-se identificar a frequência de corte $f_{cd}$ do integrador como $1.591kHz$.
+
+Em termos de tensão de entrada e saída, para observar os efeitos do circuito em torno da frequência de corte, pode-se injetar na entrada do circuito uma tensão na forma:
+
+\begin{center}
+\begin{equation} \label{der:1}
+       v_i(t) = sen(\omega_{cd}t) V
+\end{equation}
+\end{center}
+
+Nessa região espera-se que o ganho da função de transferência, bem como o ângulo de defasagem sejam:
+
+\begin{center}
+\begin{equation} \label{der:1}
+       |T_{dp}(\omega_{cd})| = |k_d| \times 0.707  = 7.07 V/V
+\end{equation}
+\end{center}
+
+\begin{center}
+\begin{equation} \label{der:2}
+       \angle T_{dp}(\omega_{cd})  = -135°
+\end{equation}
+\end{center}
+
+Assim a saída será:
+
+\begin{center}
+\begin{equation} \label{der:3}
+       v_o(t) = |T_{dp}(\omega_{cd})| \times |v_i(t)| \times sen(\omega_{cd}t + T_{dp}(\omega_{cd})) = 7.07\times sen(\omega_{cd}t - 135°) V
+\end{equation}
+\end{center}
+
+Dessa forma, a resposta em frequência pode ser observada a partir dos diagramas de bode da função de transferência. A curva de módulo indica um perfil mostra que há derivação quase ideal para frequências bem abaixo à de corte e acima dessa frequência, mantém o ganho constante. A curva de ângulo mostra que o derivador é inversor.
+
+\input{graph/bode_der.tex}
+
+Se injetado um sinal quadrado no derivador cujo o espectro de frequência possui harmônicas, pode-se perceber que de acordo com que a faixa de frequências de maior potência fique a frequências abaixo da de corte, haverá uma intensa derivação do sinal, resultando em impulsos na saída. Porém, de acordo com que as frequências do sinal aumentem, elas enfrentarão a região de ganho constante, ficando sujeitas a não mais serem derivadas.
+
+\section{Resultados e discussão}
+
+Para encontrar todos os resultados necessários para comprovar a teoria, a prática foi dividida em algumas etapas, sendo elas:
+
+
+\begin{itemize}
+
+    \item Montar o circuito da figura \ref{ckt:1} e aplicar $V_{in} = sen (2\pi \times f_i \times t)$ V, variando-se $f_i$ de modo a se obter as curva de magnitude e ganho desse circuito;
+    \item Realizar o mesmo procedimento no circuito da figura \ref{ckt:2};
+    \item Aplicar um onda quadrada na entrada e comparar valores na frequência corte, muito abaixo da frequência de corte e muito superior a frequência de corte para ambos os circuito e verificar o que ocorre;
+\end{itemize}
+
+Para a obtenção das curvas de magnitude e fase dos circuitos da figura \ref{ckt:1} e \ref{ckt:2}, foi aplicado na entrada uma tensão de $V_{in} = sen (2\pi \times f_i \times t)$ V, variando o $f_{i}$ nas frequências de 1Hz a 100kHz, e também, na frequência de corte real dos circuitos. Foi possível obter os valores listados na tabela da figura \ref{table} encontrada no anexo, para ambos os circuitos, tanto o integrativo quanto o diferencial.
+
+A frequência de corte para cada circuito foi determinada a partir do ângulo de defasagem entre entrada e saída, sendo de 135° para  o circuito integrador encontrando uma frequência de corte de $f_{oi} \approx 1,1kHz$, e -135° para o circuito diferenciador encontrando uma frequência de corte de $f_{od} \approx 1,75kHz$. Os  gráficos referentes a medição da fase e amplitude nas frequências de corte no osciloscópio se encontram podem ser observadas na figura \ref{cut}.
+
+\begin{figure}[H] 
+\centering
+\subfigure[ref1][Integrador.]{\includegraphics[width=7.5cm]{imagens/f0_int.png}}
+\subfigure[ref2][Derivador.]{\includegraphics[width=7.5cm]{imagens/f0_der.png}}
+\caption{Forma de onda para entrada (CH2) e saída (CH1) na frequência de corte de cada circuito.}
+\label{cut}
+\end{figure}
+
+Pode-se ainda visualizar os diagramas de fase e amplitude utilizando os valores encontrados na tabela da figura \ref{table} que se encontra em anexo. Dessa forma pode-se comparar as curvas de bode práticas com as teóricas e perceber que de fato há uma relação entre teoria e prática.
+
+\input{graph/graph_int.tex}
+\input{graph/graph_der.tex}
+
+
+Podemos notar que limitações do circuito derivador e também pelas próprias limitações do CI LF353 e equipamentos utilizados, não se foi possível encontrar os valores de amplitude e fase para pequenos frequências, como 1Hz e para frequências acima de 100kHz. Acima de 100kHz o circuito apresentou um queda do ganho e da fase devido às limitações do CI, sendo eles oriundos da característica passa-baixa da função de transferência do próprio amplificador operacional não ideal. 
+
+Para a segunda parte da atividade foi comparada a saída a partir de uma entrada quadrada com três diferentes frequências, onde $f_1<<f_{c}$, $f_2 = f_{c}$ e por fim $f_1>>f_{c}$. Para ambos os circuitos tanto o integrativo quanto o diferencial.
+
+Primeiramente para o circuito integrador prático foram escolhidos frequências de 100 Hz, 10kHz, 850khz para serem comparadas com a frequência de corte do integrador $f_{ci} = 1,1 kHz$. Obteve-se as imagens abaixo:
+
+
+\begin{figure}[H] 
+\centering
+\subfigure[ref1][100Hz.]{\includegraphics[width=7.5cm]{imagens/1_2_a.png}}
+\subfigure[ref2][1.1kHz.]{\includegraphics[width=7.5cm]{imagens/1_2_b.png}}
+\subfigure[ref3][10kHz.]{\includegraphics[width=7.5cm]{imagens/1_2_c.png}}
+\subfigure[ref4][850kHz.]{\includegraphics[width=7.5cm]{imagens/1_2_d.png}}
+\caption{Forma de onda para uma entrada na forma de uma onda quadrada (CH2) e saída (CH1) para diferentes frequências no circuito integrador.}
+\end{figure}
+
+Pode-se notar que para valores muito menores que a frequência de corte, o sinal de saída quase não sofre modificações por meio de uma integração, porém apenas uma ganho. Como todo sinal real é limitado no tempo, logo possui um espectro de frequência ilimitado, mesmo com a frequência principal em baixos valores, as harmônicas de alta frequência estarão na zona de integração, assim permitindo uma leve integração do sinal.
+
+Já para valores na frequência de corte o circuito é integrado e multiplicado com os valores do inverso da constante de tempo, o que faz o circuito carregar e descarregar completamente, como pode ser observado na figura.
+
+Para valores na faixa de 100kHz, tem-se o sinal de entrada integrado na saída com uma atenuação e por fim, para muito acima da frequência de corte a saída praticamente não tem ganho, pois seus valores são fortemente atenuados, mas ainda se percebe que o sinal é integrado.
+
+Já para o circuito diferenciador foram escolhidos frequências de 100 Hz, 10kHz, 100khz para serem comparadas com a frequência de corte do integrador $f_{cd} = 1,75 kHz$. Obtemos asimagens abaixo:
+
+\begin{figure}[H] 
+\centering
+\subfigure[ref1][100Hz]{\includegraphics[width=7.5cm]{imagens/2_2_a.png}}
+\subfigure[ref2][1,75kHz]{\includegraphics[width=7.5cm]{imagens/2_2_b.png}}
+\subfigure[ref3][10kHz]{\includegraphics[width=7.5cm]{imagens/2_2_c.png}}
+\subfigure[ref4][100kHz]{\includegraphics[width=7.5cm]{imagens/2_2_d.png}}
+\caption{Forma de onda para uma entrada na forma de uma onda quadrada (CH2) e saída (CH1) para diferentes frequências no circuito integrador.}
+\end{figure}
+
+A partir das imagens acima, para um circuito diferenciador prático, percebe-se para frequências muito menores que a de corte a atenuação é muito grande, já para a frequência de corte o circuito se comporta como o negativo da constante de tempo (RC) multiplicada pelo o sinal derivado da entrada dessa forma temos um decaimento na saída com a saturação dos no trem de pulsos. Já para valores muito acima da frequência de corte, teremos que o capacitor se comportará como aproximadamente um curto, logo teremos um circuito praticamente inversor, de modo que a saída é bem próxima a onda quadrada invertida.   
+
+Pode-se perceber que na figura (a) o capacitor descarrega completamente. Já na figura (b), ele quase ainda possui um pouco de carga (na frequência de corte deveria descarregar completamente em um semi-período). Para a figura (c) já não há mais tempo para descarregar. Isso mostra que a constante de tempo RC permanece a mesma para o circuito, independentemente da frequência de entrada.
+
+
+
+
+\section{Conclusões}
+
+A prática foi de essencial importância para a confirmação dos valores teóricos do integrador e derivador, abrindo espaço para novas aplicações de circuitos analógicos com amplificadores operacionais. Também foi possível entender os limites físicos dos circuitos integrados utilizados, que por mais que são aproximadamente ideais, ainda possuem uma limitação no que confere a banda de passagem limitada dos amplificadores operacionais do CI LF353. Dessa forma, mesmo com as limitações de projeto, é possível compreender a importância desses circuitos, apresentando uma alternativa de alta velocidade na resposta e pela facilidade de implementação do circuito.
+
+
+
+
+
+\newpage
+
+\section{Anexos}
+
+\begin{figure}[H] 
+\includegraphics[scale=0.22]{imagens/calc1.jpg} 
+\centering
+\caption{Folha 1 de cálculos da prática.}
+\label{p5-2} 
+\end{figure} 
+
+\begin{figure}[H] 
+\includegraphics[scale=0.15]{imagens/calc2.jpg} 
+\centering
+\caption{Folha 2 de cálculos da prática.}
+\label{p5-2} 
+\end{figure} 
+
+\newpage
+\begin{figure}[h!]
+	\centering
+		\includepdf[page={1}]{table.pdf} 
+	\caption{Tabela contendo os valores medidos na prática para ambos os circuitos.}
+	\label{table}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
